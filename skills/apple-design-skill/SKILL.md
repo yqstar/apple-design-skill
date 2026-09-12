@@ -18,7 +18,7 @@ These instructions are portable across Agent Skills hosts, including Codex, Clau
 1. Inspect affected components, shared tokens, installed dependencies, and actual behavior. Identify the primary task, input methods, states, and affected variants. For a review, report findings without unsolicited edits.
 2. Prioritize correct operation, semantics, focus, and recovery; then continuity and visual consistency; then optional effects. Fix shared components or purposeful variants within scope.
 3. Reuse accessible primitives and existing tools. CSS usually suffices for hover, press, and simple visibility changes; playback control may use Web Animations. Dragging and velocity handoff need readable presentation values, cancellation, and retargeting. Preserve native scrolling and suitable scroll snap; do not add a framework just to apply this skill.
-4. Verify relevant states and input paths before delivery. Report the change, observable result, checks performed, and remaining limitations. Review findings should give location, trigger, impact, evidence, and a minimal correction.
+4. Complete the requested implementation or review, inspect the affected pages as a whole, and verify relevant states and input paths before delivery. Follow the verification and handoff guidance below. Review findings should give location, trigger, impact, evidence, and a minimal correction.
 
 ## Dropdowns — required when affected
 
@@ -53,7 +53,7 @@ Use shared tokens and documented variants across affected screens; avoid isolate
 ### Verify the expanded menu
 
 - Inspect each affected variant beside surrounding controls, closed and open, including selected and distinct active/hovered rows where supported. Cover long options, many results, relevant themes, the narrowest target viewport, and containing dialogs/iframes.
-- **For visual dropdown work, retain an image that actually shows the expanded popup.** An “expanded” accessibility state, successful selection, or screenshot omitting the OS menu cannot establish visual integration. If capture is unavailable, report appearance as unverified.
+- **For visual dropdown work, directly inspect the actual expanded popup** in a live browser view or a temporary screenshot. An “expanded” accessibility state, successful selection, or screenshot omitting the OS menu cannot establish visual integration. Retaining an image is not required. If visual inspection is unavailable, report appearance as unverified.
 - Exercise pattern-appropriate keyboard navigation and selection. For a select-only combobox, include arrows, Home/End, typeahead, Enter/Space, Escape cancellation, and Tab/Shift+Tab exit. Check pointer selection, outside dismissal, focus return/exit, disabled behavior, and one relevant interruption; read back the real value or resulting application behavior.
 
 ## Visual design and accessibility
@@ -93,6 +93,14 @@ Use for dragging, swiping, inertia, directly manipulated sheets, and spring hand
 
 Select checks for the affected behavior; spacing changes do not require the gesture suite. Use existing project checks and browser interactions. Add tests for meaningful state/input defects, not wording or animation constants.
 
+### Whole-page visual inspection
+
+- For interface changes and visual reviews, inspect the actual rendered affected pages as a whole in a live browser view or temporary screenshots. Review the overall composition, then scroll through the full page at a readable scale to check navigation, content hierarchy, typography, spacing, alignment, surface consistency, and clipping or overlap. A component crop or the first viewport alone is insufficient.
+- Check the supported desktop and narrow layouts and relevant themes. View affected controls and expanded overlays in their page context, including their relationship to surrounding content. When shared components or tokens change, inspect representative affected pages and distinct layout variants for consistency.
+- Code review, DOM assertions, and successful interactions do not replace visual inspection. If the page cannot be rendered or visually inspected, identify the unverified pages or states in the final response. After visual corrections, recheck the affected page as a whole. Report unrelated findings without expanding the implementation scope.
+
+### Behavior and state checks
+
 | Change | Relevant checks |
 | --- | --- |
 | Visual/layout | Equivalent affected controls, supported themes, long/localized labels, enlarged text, narrow viewports, contrast, and material fallbacks. |
@@ -101,7 +109,13 @@ Select checks for the affected behavior; spacing changes do not require the gest
 | Accessibility | Primary task by keyboard, focus/naming/states, relevant modal dismissal, reduced motion at startup and during motion, and immediate completion. |
 | Performance | When affected, inspect sustained input, long tasks, layout/paint, and expensive filters before tuning effects. |
 
-Record browser/device, operations, outcomes, and simulation limits. Distinguish runtime observations, automated checks, static risks, and unverified conditions. Screenshots show appearance; interaction checks show behavior. DOM assertions or emulation do not establish real-device, actual browser zoom, OS-preference, or screen-reader coverage.
+Distinguish runtime observations, automated checks, static risks, and unverified conditions. Screenshots show appearance; interaction checks show behavior. DOM assertions or emulation do not establish real-device, actual browser zoom, OS-preference, or screen-reader coverage.
+
+### Completion and handoff
+
+- Deliver the requested project changes or review, with applicable checks completed. In the final response, concisely explain the change or findings, observable result, checks performed, and remaining limitations. Include browser/device, key operations, outcomes, and simulation limits when relevant to interpreting the checks. State unavailable checks explicitly; do not claim unverified behavior passed.
+- **Do not create or retain extra delivery artifacts by default.** Unless requested, do not generate standalone reports, checklists, design documents, demo pages, screenshots, recordings, or output folders solely to document completion. The requested implementation and the final response are sufficient; saved evidence is not a completion requirement.
+- Use temporary captures only as needed for verification and clean up task-created temporary files afterward. Preserve existing project assets and any deliverables the user explicitly requested.
 
 ## Sources
 

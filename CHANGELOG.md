@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.0.4
+
+- Require whole-page visual inspection across supported layouts and relevant themes, including representative pages affected by shared component or token changes.
+- Clarify completion and handoff: finish the requested work and relevant checks, then summarize results and limitations in the final response without extra delivery artifacts by default.
+- Verify expanded dropdown appearance through direct visual inspection or temporary captures, without requiring retained screenshots; clean up task-created temporary files.
+
 ## 0.0.3
 
 - Default all CLI commands to user scope and the Codex, Claude Code and Cursor targets; keep `--global` and `--all` as explicit equivalents.
