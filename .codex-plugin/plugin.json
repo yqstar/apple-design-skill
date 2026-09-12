@@ -1,0 +1,27 @@
+{
+  "name": "apple-design-skill",
+  "version": "1.0.0-rc.1",
+  "description": "Apple-style interface design, complete dropdown verification, and optional multi-agent collaboration.",
+  "author": {
+    "name": "yqstar",
+    "url": "https://github.com/yqstar"
+  },
+  "homepage": "https://github.com/yqstar/apple-design-skill",
+  "repository": "https://github.com/yqstar/apple-design-skill",
+  "license": "MIT",
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Apple Design",
+    "shortDescription": "Consistent interfaces across coding agents.",
+    "longDescription": "Design and review Apple-style web interfaces, including complete dropdown appearance, keyboard behavior, accessibility, and coordinated multi-agent work.",
+    "developerName": "yqstar",
+    "category": "Productivity",
+    "capabilities": [
+      "Write",
+      "Interactive"
+    ],
+    "defaultPrompt": [
+      "Use Apple Design to design or review this interface and verify affected interactions."
+    ]
+  }
+}

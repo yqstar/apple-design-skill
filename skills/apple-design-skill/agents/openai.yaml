@@ -1,0 +1,4 @@
+interface:
+  display_name: "Apple Design"
+  short_description: "Apple-style interfaces with consistent expanded dropdowns"
+  default_prompt: "Use $apple-design-skill to design or review this interface, keep dropdown triggers and expanded menus visually consistent, and verify appearance and behavior."
