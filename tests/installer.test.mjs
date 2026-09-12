@@ -48,7 +48,7 @@ test('install real payload into all three hosts, outside version snapshots', t =
   assert.equal(result.targets.length, 3);
   for (const target of result.targets) {
     assert.equal(target.status, 'managed'); assert.equal(target.version, pkg.version);
-    assert.match(read(join(target.path, 'references/collaboration.md')), /Design owner/);
+    assert.equal(treeHash(target.path), treeHash(join(root, 'skills', pkg.name)));
   }
   assert.ok(fs.existsSync(join(work, '.apple-design-skill/versions', pkg.version, 'SKILL.md')));
   assert.ok(!fs.existsSync(join(work, '.agents/skills/.apple-design-skill')));
@@ -179,7 +179,8 @@ test('npm tarball contains portable payload and a runnable installer', { skip: !
   const work = workspace(t);
   const [pack] = JSON.parse(execFileSync(process.execPath, [process.env.npm_execpath,'pack',root,'--ignore-scripts','--pack-destination',work,'--json'], { encoding:'utf8' }));
   const files = pack.files.map(f => f.path);
-  for (const file of ['bin/apple-design-skill.mjs','lib/installer.mjs','skills/apple-design-skill/SKILL.md','skills/apple-design-skill/references/collaboration.md','.codex-plugin/plugin.json','.claude-plugin/plugin.json']) assert.ok(files.includes(file), file);
+  for (const file of ['bin/apple-design-skill.mjs','lib/installer.mjs','skills/apple-design-skill/SKILL.md','skills/apple-design-skill/agents/openai.yaml','.codex-plugin/plugin.json','.claude-plugin/plugin.json']) assert.ok(files.includes(file), file);
+  assert.ok(!files.some(f => /^(examples|docs)\//.test(f)), 'Repository examples and documentation stay outside the npm payload');
   assert.ok(!files.some(f => /(^|\/)(\.DS_Store|\.npmrc|\.env|node_modules)(\/|$)/.test(f)));
   execFileSync('tar', ['-xzf',join(work,pack.filename),'-C',work]);
   const target = workspace(t);

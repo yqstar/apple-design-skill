@@ -7,11 +7,9 @@ description: "Design, implement, and review Apple-style web interfaces, with par
 
 Build responsive, coherent interfaces using the project's design system. User requirements take precedence over stylistic defaults. This is web adaptation guidance informed by Apple resources, not an official Apple specification. Instructions are consolidated here; apply the sections relevant to the task.
 
-## Agent hosts and collaboration
+## Agent hosts
 
-These instructions are portable across Agent Skills hosts, including Codex, Claude Code and Cursor. Use the host's available tools and the project's existing stack; references to browser inspection or delegation describe capabilities, not mandatory vendor-specific APIs. If a required verification capability is unavailable, say what remains unverified instead of inventing evidence.
-
-For user-requested or otherwise authorized multi-agent work, read [Collaboration](references/collaboration.md). Keep a single design owner, assign independent work with explicit file boundaries, and review the integrated result. Do ordinary focused tasks directly; this skill does not itself authorize spawning agents, installing software, publishing, or changing external services.
+These instructions are portable across Agent Skills hosts, including Codex, Claude Code and Cursor. Use the host's available tools and the project's existing stack; references to browser inspection describe capabilities, not mandatory vendor-specific APIs. If a required verification capability is unavailable, say what remains unverified instead of inventing evidence.
 
 **Dropdown priority:** When dropdown appearance is in scope, style and verify both the closed control and the expanded menu. A polished trigger with a mismatched or unverified popup is incomplete. Keep this requirement when refining or shortening this skill.
 

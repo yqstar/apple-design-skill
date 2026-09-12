@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="同一份 Agent 学习页需求，比较未使用与使用 apple-design-skill 的两个本地实现。"><title>Agent Lab · 设计对比</title><link rel="stylesheet" href="compare.css"><script src="compare.js?v=2" defer></script><link rel="icon" type="image/svg+xml" href="favicon.svg"></head><body>
+<header class="compare-header"><a class="wordmark" href="index.html"><span class="experiment-mark">a/b</span>DESIGN STUDY</a><span class="header-note">Agent Lab <span>·</span> 本地设计实验</span></header>
+<main>
+  <section class="compare-intro"><div><div class="kicker">ONE BRIEF. TWO INTERPRETATIONS.</div><h1>同一份需求，两种设计结果。</h1><p>一个开发者学习 LLM Agent 的工作台。内容与功能共用，设计条件不同。</p></div><a class="brief-link" href="#comparison">查看差异说明 <span aria-hidden="true">↓</span></a></section>
+  <div class="toolbar"><div class="segmented" role="group" aria-label="查看版本"><button type="button" data-mode="both" aria-pressed="true">并排对比</button><button type="button" data-mode="baseline" aria-pressed="false">A 基础版</button><button type="button" data-mode="apple" aria-pressed="false">B Apple 版</button></div><div class="viewport-controls"><span id="viewport-label">相同视口 · 1280 × 1400</span><div class="segmented compact" role="group" aria-label="预览尺寸"><button type="button" data-device="desktop" aria-pressed="true">桌面</button><button type="button" data-device="mobile" aria-pressed="false">手机</button></div></div></div>
+  <div class="previews" data-mode="both" data-device="desktop">
+    <section class="preview-panel" data-variant="baseline" aria-labelledby="a-label"><header class="panel-header"><div><span class="variant-id">A</span><span id="a-label">未使用 apple-design-skill</span></div><a href="baseline.html" target="_blank" rel="noopener" aria-label="单独打开基础版">单独打开 <span aria-hidden="true">↗</span></a></header><div class="frame-stage"><div class="frame-viewport"><iframe src="baseline.html" title="基础版 Agent 学习工作台" width="1280" height="1400"></iframe></div></div><footer class="panel-caption"><span>深色侧栏 · 紧凑卡片 · 青绿色操作</span><span>原生选择器</span></footer></section>
+    <section class="preview-panel" data-variant="apple" aria-labelledby="b-label"><header class="panel-header"><div><span class="variant-id">B</span><span id="b-label">使用 apple-design-skill</span></div><a href="apple.html" target="_blank" rel="noopener" aria-label="单独打开 Apple 版">单独打开 <span aria-hidden="true">↗</span></a></header><div class="frame-stage"><div class="frame-viewport"><iframe src="apple.html" title="Apple 设计版 Agent 学习工作台" width="1280" height="1400"></iframe></div></div><footer class="panel-caption"><span>浅色顶栏 · 更充裕的间距 · 蓝色操作</span><span>自定义选择器</span></footer></section>
+  </div>
+  <p class="preview-note">两个窗口可独立操作；完成课程后的进度会同步。并排预览按相同比例缩放，单独打开可查看实际尺寸。</p>
+  <section class="comparison" id="comparison"><div class="report-heading"><h2>变化在哪里？</h2><span>基于实现的比较 · 不做主观分数排名</span></div><div class="table-scroll"><table><thead><tr><th scope="col">比较维度</th><th scope="col">A · 基础版</th><th scope="col">B · Apple 版</th></tr></thead><tbody>
+    <tr><th scope="row">信息布局</th><td>固定侧栏保留工作台导航，主区更紧凑。</td><td>导航移至顶部，课程区域获得完整横向空间。</td></tr>
+    <tr><th scope="row">视觉层级</th><td>深色学习卡片、绿色主按钮，区域对比强。</td><td>浅蓝学习卡片、蓝色主按钮，靠间距和字重组织内容。</td></tr>
+    <tr><th scope="row">组件语言</th><td>较小圆角、可见边框、不同色彩的课程图标。</td><td>统一圆角和中性色图标，共用颜色与控件尺寸变量。</td></tr>
+    <tr><th scope="row">下拉筛选</th><td>原生 select；展开样式由浏览器和系统决定。</td><td>按钮和展开列表统一设计，包含选中标记、活动行、边缘定位与键盘操作。</td></tr>
+    <tr><th scope="row">实现取舍</th><td>原生控件维护量小；桌面侧栏占用一部分宽度。</td><td>界面风格更统一；自定义控件需要维护更多交互和兼容性代码。</td></tr>
+    <tr><th scope="row">保持一致</th><td colspan="2">同一份输入、六节课程、文案、Python 示例、自测、课程筛选与浏览器本地进度。没有真实模型调用。</td></tr>
+  </tbody></table></div>
+  <details class="experiment-details"><summary>查看共同输入与实验边界</summary><div class="details-content"><p><strong>共同输入：</strong>为会一点 Python 的开发者制作 Agent Lab 中文学习引导页。提供六节课程、学习路线、核心循环图、阶段筛选、课程阅读、实践任务、自测及本机进度，适配桌面和手机。本地静态实现，不部署。</p><p><strong>实施方式：</strong>先完成 A 并记录源文件哈希，再读取 apple-design-skill 制作 B。两版直接引用同一份课程数据和应用逻辑，没有为 A 故意降低功能完成度。</p><p><strong>边界：</strong>这是同一实现者按先后顺序完成的设计对照，不是独立模型会话的随机实验；技能的名称和简介预先可见。结果体现本次实现选择，不能单独证明该技能普遍提升设计质量。</p></div></details></section>
+  <footer class="compare-footer"><span>相同任务，相同内容；让设计差异可见。</span><span>HTML / CSS / JavaScript · 无外部依赖</span></footer>
+</main></body></html>

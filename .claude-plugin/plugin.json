@@ -1,7 +1,7 @@
 {
   "name": "apple-design-skill",
-  "version": "0.0.1",
-  "description": "Apple-style interface design with complete dropdown verification and optional multi-agent collaboration.",
+  "version": "0.0.2",
+  "description": "Apple-style interface design with complete dropdown verification.",
   "author": {
     "name": "yqstar",
     "url": "https://github.com/yqstar"

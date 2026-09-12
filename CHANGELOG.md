@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.0.2
+
+- Remove multi-agent collaboration guidance and related package and plugin descriptions.
+- Reorganize the README around a real before/after example, quick start, use cases and repository structure.
+- Add installation, release and contribution guides, with dated references to established Skill repositories.
+- Include the final Agent Lab pages and three screenshots; check example resources in CI while keeping them outside the npm package.
+
 ## 0.0.1
 
 - First non-prerelease version, published through the GitHub Actions OIDC workflow.

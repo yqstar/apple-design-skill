@@ -23,5 +23,6 @@ jobs:
           package-manager-cache: false
       - run: npm ci --ignore-scripts
       - run: npm run check
+      - run: npm run check:example
       - run: npm test
       - run: npm pack --dry-run
