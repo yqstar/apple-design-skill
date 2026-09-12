@@ -7,6 +7,7 @@ import { execute, resolveTargets, validateName, validateVersion } from '../lib/i
 
 const packageRoot = fileURLToPath(new URL('../', import.meta.url));
 const pkg = JSON.parse(readFileSync(new URL('../package.json', import.meta.url), 'utf8'));
+const defaultAgents = ['codex', 'claude', 'cursor'];
 const help = `apple-design-skill ${pkg.version}
 
 Usage:
@@ -17,9 +18,9 @@ Usage:
 
 Options:
   --agent NAME[,NAME]  codex, claude, cursor, universal (repeatable)
-  --all               Codex + Claude Code + Cursor
-  --project PATH      Project scope (default: current directory)
-  --global            User scope, in your home directory
+  --all               Codex + Claude Code + Cursor (default)
+  --global            User scope, in your home directory (default)
+  --project [PATH]    Project scope; omit PATH to use the current directory
   --name NAME         Skill name; use a distinct name for side-by-side versions
   --force             Back up and replace existing or locally modified files
   --dry-run           Show planned changes without writing files
@@ -27,12 +28,19 @@ Options:
   -v, --version       Print npm package version
   -h, --help          Show help
 
-Default target: universal (.agents/skills), also discovered by Codex and Cursor.
+Default: install for Codex, Claude Code and Cursor in your home directory.
+  Codex:       ~/.agents/skills
+  Claude Code: ~/.claude/skills
+  Cursor:      ~/.cursor/skills
+Use --agent to select tools, or --agent universal for only .agents/skills.
+All commands use the same scope and target defaults; use --project for project copies.
 No files are installed by npm postinstall; run the install command explicitly.
 
 Examples:
-  npx apple-design-skill@${pkg.version} install --all --project .
-  npx apple-design-skill@${pkg.version} install --agent claude --global
+  npx apple-design-skill@${pkg.version} install
+  npx apple-design-skill@${pkg.version} install --agent claude
+  npx apple-design-skill@${pkg.version} install --project
+  npx apple-design-skill@${pkg.version} install --agent codex --project ./my-project
   npx apple-design-skill@${pkg.version} install --name apple-design-pinned
   npx apple-design-skill@latest use ${pkg.version} --all
 `;
@@ -49,7 +57,7 @@ try {
   if (!['install', 'use', 'list', 'uninstall'].includes(command)) throw new Error(`Unknown command: ${command}`);
   const requestedVersion = command === 'use' ? argv.shift() : pkg.version;
   if (command === 'use') validateVersion(requestedVersion);
-  let scopeRoot = process.cwd();
+  let scopeRoot = homedir();
   let scopeFlag;
   const agents = [];
   const options = { command, packageRoot, version: requestedVersion, name: 'apple-design-skill', force: false, dryRun: false };
@@ -61,11 +69,14 @@ try {
   for (let i = 0; i < argv.length; i++) {
     const arg = argv[i];
     if (arg === '--agent') { agents.push(...next(arg, i++).split(',')); }
-    else if (arg === '--all') { agents.push('codex', 'claude', 'cursor'); }
+    else if (arg === '--all') { agents.push(...defaultAgents); }
     else if (arg === '--project' || arg === '--global') {
       if (scopeFlag) throw new Error('Choose one of --project or --global');
       scopeFlag = arg;
-      scopeRoot = arg === '--project' ? resolve(next(arg, i++)) : homedir();
+      if (arg === '--project') {
+        const path = argv[i + 1] && !argv[i + 1].startsWith('-') ? argv[++i] : '.';
+        scopeRoot = resolve(path);
+      } else scopeRoot = homedir();
     } else if (arg === '--name') { options.name = next(arg, i++); }
     else if (arg === '--force') options.force = true;
     else if (arg === '--dry-run') options.dryRun = true;
@@ -74,7 +85,7 @@ try {
   }
   validateName(options.name);
   options.scopeRoot = resolve(scopeRoot);
-  options.targets = resolveTargets(options.scopeRoot, agents.length ? agents : ['universal'], options.name);
+  options.targets = resolveTargets(options.scopeRoot, agents.length ? agents : defaultAgents, options.name);
   const result = execute(options);
   if (json) process.stdout.write(`${JSON.stringify(result, null, 2)}\n`);
   else {

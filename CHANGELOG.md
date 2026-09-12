@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.0.3
+
+- Default all CLI commands to user scope and the Codex, Claude Code and Cursor targets; keep `--global` and `--all` as explicit equivalents.
+- Support `--project` for the current project and `--project PATH` for a specific project, with `--agent` limiting the selected tools in either scope.
+- Document the default change from 0.0.2 and earlier, and verify user/project isolation across installation, activation, listing and uninstall.
+
 ## 0.0.2
 
 - Remove multi-agent collaboration guidance and related package and plugin descriptions.

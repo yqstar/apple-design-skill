@@ -10,13 +10,13 @@
 
 [快速开始](#快速开始) · [使用前后对比](#使用前后对比) · [安装与版本管理](docs/installation.md) · [参与贡献](CONTRIBUTING.md)
 
-在目标项目中安装给 Codex（Node.js 22+）：
+一条命令安装给当前用户的 Codex、Claude Code 和 Cursor，跨项目使用（Node.js 22+）：
 
 ```sh
-npx apple-design-skill@latest install --agent codex
+npx apple-design-skill@latest install
 ```
 
-使用 Claude Code 或 Cursor？见[快速开始](#快速开始)。
+只安装给某个工具，或安装到项目目录？见[快速开始](#快速开始)。
 
 ## 使用前后对比
 
@@ -46,20 +46,25 @@ python3 -m http.server 4177 --bind 127.0.0.1 --directory examples/agent-learning
 
 ## 快速开始
 
-需要 **Node.js 22+**。在你要使用 Skill 的项目目录中执行：
+需要 **Node.js 22+**。默认安装到用户目录，可在任意目录执行：
 
 ```sh
-# Codex
+# 默认：用户级安装，供 Codex、Claude Code、Cursor 使用
+npx apple-design-skill@latest install
+
+# 只安装给指定工具
 npx apple-design-skill@latest install --agent codex
-
-# Claude Code
 npx apple-design-skill@latest install --agent claude
-
-# Cursor
 npx apple-design-skill@latest install --agent cursor
+
+# 仅安装到当前项目
+npx apple-design-skill@latest install --project
+
+# 安装到指定项目，也可同时选择工具
+npx apple-design-skill@latest install --project ./my-project --agent codex
 ```
 
-选择你使用的工具执行一条即可。需要同时安装给三个工具时使用 `install --all`；先查看目标路径可追加 `--dry-run`。npm 下载本包不会自动写入技能目录，`install` 命令才会执行安装。
+默认目标为 `~/.agents/skills`（Codex）、`~/.claude/skills`（Claude Code）、`~/.cursor/skills`（Cursor）中的 `apple-design-skill`。`--global` 和 `--all` 可显式声明默认行为；`--agent` 限定工具，`--project [路径]` 切换到项目目录。先查看目标路径可追加 `--dry-run`。npm 下载本包不会自动写入技能目录，`install` 命令才会执行安装。
 
 安装后，在新会话中给出具体任务：
 
@@ -69,7 +74,7 @@ npx apple-design-skill@latest install --agent cursor
 特别检查下拉按钮与展开菜单，并验证键盘选择、关闭方式和窄屏布局。
 ```
 
-Codex 可显式调用 `$apple-design-skill`，Claude Code 可调用 `/apple-design-skill`。固定版本、用户级安装、重复入口、升级与回退见[安装指南](docs/installation.md)。
+Codex 可显式调用 `$apple-design-skill`，Claude Code 可调用 `/apple-design-skill`。固定版本、项目级安装、重复入口、升级与回退见[安装指南](docs/installation.md)。
 
 ## 适合哪些任务
 
