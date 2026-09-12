@@ -31,10 +31,10 @@ Default target: universal (.agents/skills), also discovered by Codex and Cursor.
 No files are installed by npm postinstall; run the install command explicitly.
 
 Examples:
-  npx apple-design-skill@1.0.0 install --all --project .
-  npx apple-design-skill@1.0.0 install --agent claude --global
-  npx apple-design-skill@1.0.0 install --name apple-design-v1
-  npx apple-design-skill@latest use 1.0.0 --all
+  npx apple-design-skill@${pkg.version} install --all --project .
+  npx apple-design-skill@${pkg.version} install --agent claude --global
+  npx apple-design-skill@${pkg.version} install --name apple-design-pinned
+  npx apple-design-skill@latest use ${pkg.version} --all
 `;
 
 try {

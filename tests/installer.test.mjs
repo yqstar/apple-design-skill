@@ -186,3 +186,22 @@ test('npm tarball contains portable payload and a runnable installer', { skip: !
   const output = JSON.parse(execFileSync(process.execPath, [join(work,'package/bin/apple-design-skill.mjs'),'install','--project',target,'--json'], {encoding:'utf8'}));
   assert.equal(output.targets[0].version, pkg.version);
 });
+
+test('skill validation accepts CRLF source files from Windows checkouts', t => {
+  const work = workspace(t);
+  for (const file of ['package.json','.codex-plugin','.claude-plugin','bin','lib','scripts','skills']) fs.cpSync(join(root,file),join(work,file),{recursive:true});
+  fs.mkdirSync(join(work,'tests'));
+  const skill = join(work,'skills/apple-design-skill/SKILL.md');
+  fs.writeFileSync(skill, read(skill).replace(/\r?\n/g,'\r\n'));
+  const output = execFileSync(process.execPath,[join(work,'scripts/check.mjs')],{encoding:'utf8'});
+  assert.match(output,/Validated apple-design-skill/);
+});
+
+test('release guard only accepts the exact version tag from the publishing repository', () => {
+  const check = join(root,'scripts/release-check.mjs');
+  const env = {...process.env,GITHUB_REF:`refs/tags/v${pkg.version}`,GITHUB_REPOSITORY:'yqstar/apple-design-skill'};
+  assert.equal(spawnSync(process.execPath,[check],{env}).status,0);
+  for (const update of [{GITHUB_REF:'refs/heads/main'},{GITHUB_REF:'refs/tags/v99.0.0'},{GITHUB_REPOSITORY:'someone/fork'}]) {
+    assert.notEqual(spawnSync(process.execPath,[check],{env:{...env,...update}}).status,0);
+  }
+});

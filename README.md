@@ -16,19 +16,19 @@
 npx apple-design-skill@latest install --all
 
 # 固定版本，适合团队复现
-npx apple-design-skill@1.0.0 install --all --project .
+npx apple-design-skill@0.0.1 install --all --project .
 
 # 只安装给指定工具，可使用逗号或重复 --agent
-npx apple-design-skill@1.0.0 install --agent codex,claude
+npx apple-design-skill@0.0.1 install --agent codex,claude
 
 # 用户级安装
-npx apple-design-skill@1.0.0 install --agent cursor --global
+npx apple-design-skill@0.0.1 install --agent cursor --global
 
 # 不指定工具：安装到通用 .agents/skills
-npx apple-design-skill@1.0.0 install
+npx apple-design-skill@0.0.1 install
 
 # 提前查看目标路径，不写入文件
-npx apple-design-skill@1.0.0 install --all --dry-run
+npx apple-design-skill@0.0.1 install --all --dry-run
 ```
 
 | 目标 | 项目级目录 | 用户级目录 |
@@ -56,14 +56,14 @@ npx apple-design-skill@next install --name apple-design-preview
 npx apple-design-skill@latest list --all
 
 # 切换回已安装过的版本；use 不下载技能内容
-npx apple-design-skill@latest use 1.0.0 --all
+npx apple-design-skill@latest use 0.0.1 --all
 
 # 尚未缓存的旧版本，直接从 npm 按精确版本安装
 npx apple-design-skill@1.0.0-rc.1 install --all
 
 # 两个版本同时保留，使用不同的技能名称
 npx apple-design-skill@1.0.0-rc.1 install --name apple-design-preview --agent codex
-npx apple-design-skill@1.0.0 install --name apple-design-stable --agent codex
+npx apple-design-skill@0.0.1 install --name apple-design-stable --agent codex
 ```
 
 并存安装会同时修改 `SKILL.md` 中的 `name` 和 Codex 元数据里的调用名称。因此可以明确调用 `$apple-design-preview` 或 `$apple-design-stable`，不会让两个版本共享同一个技能名称。自动选择时仍有可能同时匹配相似描述，做版本对照时请显式指定要使用的名称。
@@ -71,11 +71,11 @@ npx apple-design-skill@1.0.0 install --name apple-design-stable --agent codex
 `use` 本身可以离线使用；`npx @latest` 仍可能访问 npm 解析安装器。需要完全离线时，先将安装器固定在本地依赖中，或通过已安装的 CLI 执行：
 
 ```sh
-npm install --save-dev --save-exact apple-design-skill@1.0.0
-./node_modules/.bin/apple-design-skill use 1.0.0 --all
+npm install --save-dev --save-exact apple-design-skill@0.0.1
+./node_modules/.bin/apple-design-skill use 0.0.1 --all
 ```
 
-Windows 可运行 `node node_modules/apple-design-skill/bin/apple-design-skill.mjs use 1.0.0 --all`。
+Windows 可运行 `node node_modules/apple-design-skill/bin/apple-design-skill.mjs use 0.0.1 --all`。
 
 ### 保护本地修改
 
@@ -87,8 +87,8 @@ Windows 可运行 `node node_modules/apple-design-skill/bin/apple-design-skill.m
 - 安装器拒绝目标路径和缓存中的符号链接，不通过 `--force` 绕过。
 
 ```sh
-npx apple-design-skill@1.0.0 install --all --force
-npx apple-design-skill@1.0.0 uninstall --all
+npx apple-design-skill@0.0.1 install --all --force
+npx apple-design-skill@0.0.1 uninstall --all
 ```
 
 卸载仅处理本安装器管理的活动副本，保留版本快照和备份。`--project` / `--global`、`--agent`、`--name` 都要与目标安装对应。若要把团队技能提交到 Git，可提交对应工具的技能目录，并忽略项目中的 `.apple-design-skill/` 历史缓存。
@@ -124,7 +124,7 @@ Codex 可显式调用 `$apple-design-skill`；Claude Code 可调用 `/apple-desi
 - 发布工作流仅获得 `contents: read` 和 `id-token: write`，不使用长期 `NPM_TOKEN`。
 - `workflow_dispatch` 只在版本标签 ref 上执行，可以重跑失败的发布。已成功发布的版本不应重复发布。
 
-首次建立包：npm 要求包已存在才能配置可信发布。先发布完整候选版 `1.0.0-rc.1` 到 `next`，然后在 npm 包设置中配置：
+本包已配置可信发布。初始化时发布的 `1.0.0-rc.1` 保留在 `next`；正式版本从 `0.0.1` 开始，使用 `latest`。npm 侧配置如下：
 
 | 项目 | 值 |
 | --- | --- |
@@ -140,15 +140,15 @@ Codex 可显式调用 `$apple-design-skill`；Claude Code 可调用 `/apple-desi
 后续发版：
 
 ```sh
-node scripts/version.mjs 1.1.0
+node scripts/version.mjs 0.0.2
 # 更新 CHANGELOG.md，审查改动
 npm run check
 npm test
 git add package.json package-lock.json .codex-plugin/plugin.json .claude-plugin/plugin.json CHANGELOG.md
-git commit -m "Release 1.1.0"
-git tag v1.1.0
+git commit -m "Release 0.0.2"
+git tag v0.0.2
 git push origin main
-git push origin v1.1.0
+git push origin v0.0.2
 ```
 
 ## 本地开发

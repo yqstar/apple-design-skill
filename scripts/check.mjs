@@ -15,7 +15,7 @@ for (const file of ['.codex-plugin/plugin.json', '.claude-plugin/plugin.json']) 
   if (plugin.version !== pkg.version || plugin.name !== pkg.name) throw new Error(`Package/plugin metadata mismatch: ${file}`);
 }
 const skillRoot = join(root, 'skills', pkg.name);
-const skill = readFileSync(join(skillRoot, 'SKILL.md'), 'utf8');
+const skill = readFileSync(join(skillRoot, 'SKILL.md'), 'utf8').replaceAll('\r\n', '\n');
 if (!skill.startsWith('---\nname: apple-design-skill\n') || !/^description: /m.test(skill)) throw new Error('Invalid skill frontmatter');
 if (/\[TODO:|TODO\s*PLACEHOLDER/.test(skill)) throw new Error('Unfinished skill placeholder');
 for (const match of skill.matchAll(/\]\((references\/[^)#]+)(?:#[^)]*)?\)/g)) {

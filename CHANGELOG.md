@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.0.1
+
+- First non-prerelease version, published through the GitHub Actions OIDC workflow.
+- Accept CRLF skill sources during validation and keep repository text files consistently LF across platforms.
+- Extend regression coverage for Windows checkout line endings and release tag validation.
+- Retain the candidate version for exact-version installation, rollback and side-by-side comparison.
+
 ## 1.0.0-rc.1
 
 - Package the existing Apple design guidance as a portable Agent Skill.
