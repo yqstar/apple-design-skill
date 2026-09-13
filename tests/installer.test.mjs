@@ -272,14 +272,57 @@ test('npm tarball contains portable payload and a runnable installer', { skip: !
   assert.equal(output.targets[0].version, pkg.version);
 });
 
-test('skill validation accepts CRLF source files from Windows checkouts', t => {
+function validationFixture(t) {
   const work = workspace(t);
-  for (const file of ['package.json','.codex-plugin','.claude-plugin','bin','lib','scripts','skills']) fs.cpSync(join(root,file),join(work,file),{recursive:true});
+  for (const file of ['package.json', 'package-lock.json', '.codex-plugin', '.claude-plugin', '.github', 'bin', 'lib', 'scripts', 'skills', 'docs', 'examples', 'README.md', 'CONTRIBUTING.md', 'CHANGELOG.md', 'LICENSE']) {
+    fs.cpSync(join(root, file), join(work, file), { recursive: true });
+  }
   fs.mkdirSync(join(work,'tests'));
+  return work;
+}
+
+test('skill validation accepts CRLF source files from Windows checkouts', t => {
+  const work = validationFixture(t);
   const skill = join(work,'skills/apple-design-skill/SKILL.md');
   fs.writeFileSync(skill, read(skill).replace(/\r?\n/g,'\r\n'));
   const output = execFileSync(process.execPath,[join(work,'scripts/check.mjs')],{encoding:'utf8'});
   assert.match(output,/Validated apple-design-skill/);
+});
+
+test('validation checks Markdown links across documentation and nested skill references', t => {
+  const work = validationFixture(t);
+  const check = () => spawnSync(process.execPath, [join(work, 'scripts/check.mjs')], { encoding: 'utf8' });
+  const reference = join(work, 'skills/apple-design-skill/references');
+  fs.mkdirSync(reference);
+  fs.writeFileSync(join(reference, 'details.md'), '[Guide](../../../docs/local%20guide.md#details)\n');
+  fs.writeFileSync(join(work, 'docs/local guide.md'), '# Details\n');
+  fs.appendFileSync(join(work, 'README.md'), '\n[Local guide](docs/local%20guide.md#details)\n');
+  assert.equal(check().status, 0);
+  for (const file of ['README.md', 'docs/installation.md', 'examples/agent-learning-compare/README.md', 'skills/apple-design-skill/SKILL.md', 'skills/apple-design-skill/references/details.md']) {
+    const path = join(work, file);
+    const original = read(path);
+    fs.appendFileSync(path, '\n[Removed file](missing.md)\n');
+    const result = check();
+    assert.notEqual(result.status, 0);
+    assert.match(result.stderr, /Invalid local link.*missing\.md/);
+    fs.writeFileSync(path, original);
+  }
+});
+
+test('validation rejects stale package-lock metadata', t => {
+  const work = validationFixture(t);
+  const path = join(work, 'package-lock.json');
+  const original = read(path);
+  for (const field of ['name', 'version']) {
+    for (const nested of [false, true]) {
+      const lock = JSON.parse(original);
+      (nested ? lock.packages[''] : lock)[field] = field === 'name' ? 'another-package' : '99.0.0';
+      fs.writeFileSync(path, JSON.stringify(lock));
+      const result = spawnSync(process.execPath, [join(work, 'scripts/check.mjs')], { encoding: 'utf8' });
+      assert.notEqual(result.status, 0);
+      assert.match(result.stderr, /Package\/lockfile metadata mismatch/);
+    }
+  }
 });
 
 test('release guard only accepts the exact version tag from the publishing repository', () => {

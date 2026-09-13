@@ -85,7 +85,6 @@
     filter = value;
     document.getElementById('stage-filter').value = value;
     render();
-    document.dispatchEvent(new CustomEvent('agent-filter-change', { detail: value }));
   }
   document.getElementById('stage-filter').addEventListener('change', event => setFilter(event.target.value));
   document.getElementById('course-grid').addEventListener('click', event => {
@@ -153,6 +152,6 @@
     }
   };
   window.addEventListener('storage', event => { if (event.key === storageKey || event.key === null) { readProgress(); render(); } });
-  window.AgentLab = { icon, setFilter, openCourse, getState: () => ({ filter, completed: [...completed], courses: courses.map(({id,title,stage,minutes}) => ({id,title,stage,minutes})) }) };
+  window.AgentLab = { icon };
   render();
 })();

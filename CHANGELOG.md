@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+- Remove the example's experimental WebMCP adapter, unused public methods and duplicate filter notification; keep the interactive comparison pages and screenshots.
+- Remove the one-off repository research note and ignore local self-installation copies.
+- Validate local Markdown links and lockfile metadata alongside package and plugin manifests.
+
 ## 0.0.4
 
 - Require whole-page visual inspection across supported layouts and relevant themes, including representative pages affected by shared component or token changes.

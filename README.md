@@ -102,7 +102,7 @@ lib/                          # 安装、版本缓存、回退与卸载
 examples/agent-learning-compare/
   dist/                       # 可直接运行的 A/B 页面与共用资源
   screenshots/                # 桌面、手机与展开菜单的最终截图
-docs/                         # 安装、发布与项目组织参考
+docs/                         # 安装与发布指南
 scripts/                      # 校验与版本维护
 tests/                        # 安装器及 npm 包测试
 .github/workflows/            # 跨平台 CI 与 npm 发布
@@ -122,7 +122,7 @@ npm test
 npm pack --dry-run
 ```
 
-欢迎提供可复现的设计问题、交互缺陷与文档改进。[贡献指南](CONTRIBUTING.md)说明修改位置及验证要求；[发布指南](docs/releasing.md)说明版本同步和 GitHub Actions → npm 流程；[项目组织参考](docs/project-references.md)记录本次参考的高星 Skill 仓库及采用的做法。
+欢迎提供可复现的设计问题、交互缺陷与文档改进。[贡献指南](CONTRIBUTING.md)说明修改位置及验证要求；[发布指南](docs/releasing.md)说明版本同步和 GitHub Actions → npm 流程。
 
 ## 来源与许可证
 

@@ -17,8 +17,7 @@
       wrap.style.width = `${width * scale}px`; wrap.style.height = `${height * scale}px`;
     });
   }
-  document.querySelectorAll('[data-mode]').forEach(button => {
-    if (button.tagName !== 'BUTTON') return;
+  document.querySelectorAll('button[data-mode]').forEach(button => {
     button.addEventListener('click', () => {
       previews.dataset.mode = button.dataset.mode;
       document.querySelectorAll('button[data-mode]').forEach(b => b.setAttribute('aria-pressed', String(b === button)));

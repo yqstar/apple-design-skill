@@ -115,7 +115,6 @@
   document.addEventListener('scroll', event => { if (opened && !popup.contains(event.target)) place(); }, true);
   window.addEventListener('resize', () => { if (opened) place(); });
   window.addEventListener('pagehide', close);
-  document.addEventListener('agent-filter-change', sync);
   select.addEventListener('change', sync);
   if (select.form) select.form.addEventListener('reset', () => { close(); queueMicrotask(sync); });
   new MutationObserver(sync).observe(select, { attributes: true, childList: true, subtree: true });

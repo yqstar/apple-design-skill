@@ -2,6 +2,9 @@
 node_modules/
 *.tgz
 .apple-design-skill/
+/.agents/skills/apple-design-skill/
+/.claude/skills/apple-design-skill/
+/.cursor/skills/apple-design-skill/
 coverage/
 .env
 .env.*
